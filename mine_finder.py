@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# In[ ]:
+
+
+
+
+
 # In[1]:
 
 
@@ -36,7 +42,7 @@ lev3 = driver.find_element(By.CLASS_NAME, "level3-link")
 lev3.click()
 
 
-# In[6]:
+# In[9]:
 
 
 cols = 30
@@ -92,10 +98,11 @@ el[1].click()
 time.sleep(2)
 
 
-# In[7]:
+# In[10]:
+
 
 delay = 10 # seconds
-time.sleep(4)
+time.sleep(10)
 el =WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.CLASS_NAME, 'start')))
 el.click()
 
@@ -160,8 +167,34 @@ def findMines(arr):
      for i in range(rows):
         for j in range(cols):
             if(arr[i][j]>=1 and arr[i][j]<=8):
-                el = driver.find_element(By.ID,"cell_"+str(j)+"_"+str(i))
-                el.click()
+                flag_count = 0;
+                if(i+1<rows):
+                    if(arr[i+1][j]==13):
+                        flag_count+=1
+                if(i-1<rows):
+                    if(arr[i-1][j]==13):
+                        flag_count+=1
+                if(j+1<cols):
+                    if(arr[i][j+1]==13):
+                        flag_count+=1
+                if(j-1<cols):
+                    if(arr[i][j-1]==13):
+                        flag_count+=1
+                if(i+1<rows and j+1<cols):
+                    if(arr[i+1][j+1]==13):
+                        flag_count+=1
+                if(i+1<rows and j-1<cols):
+                    if(arr[i+1][j-1]==13):
+                        flag_count+=1
+                if(i-1<rows and j+1<cols):
+                    if(arr[i-1][j+1]==13):
+                        flag_count+=1
+                if(i-1<rows and j-1<cols):
+                    if(arr[i-1][j-1]==13):
+                        flag_count+=1
+                if(flag_count == arr[i][j]):
+                    el = driver.find_element(By.ID,"cell_"+str(j)+"_"+str(i))
+                    el.click()
 updateCells(grid)
 printGrid(grid)
 while True:
