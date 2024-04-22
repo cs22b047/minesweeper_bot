@@ -26,7 +26,7 @@ driver.maximize_window()
 # In[3]:
 
 
-driver.get('https://minesweeper.online/')
+driver.get('https://minesweeper.online/new-game/ng')
 
 
 # In[4]:
@@ -38,8 +38,8 @@ from selenium.webdriver.common.by import By
 # In[5]:
 
 
-lev3 = driver.find_element(By.CLASS_NAME, "level3-link")
-lev3.click()
+# lev3 = driver.find_element(By.CLASS_NAME, "level3-link")
+# lev3.click()
 
 
 # In[9]:
@@ -92,26 +92,29 @@ def printGrid(arr):
     print("--------------------------------------------------------------")
 
 grid = [[0]*cols for _ in range(rows)]
-printGrid(grid)
-el = driver.find_elements(By.CLASS_NAME,"menu-link")
-el[1].click()
-time.sleep(2)
+# printGrid(grid)
+# el = driver.find_elements(By.CLASS_NAME,"menu-link")
+# el[1].click()
+# time.sleep(2)
 
 
 # In[10]:
-
-
-delay = 10 # seconds
-time.sleep(10)
-el =WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.CLASS_NAME, 'start')))
+delay = 1000 # seconds
+time.sleep(5)
+el =WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.ID, 'level_select_13')))
 el.click()
-
+delay = 1000 # seconds
+# el =WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.CLASS_NAME, 'start')))
+time.sleep(2) 
+el = driver.find_element(By.CLASS_NAME,"start")
+el.click()
 
 # In[ ]:
 
 
 from selenium.webdriver import ActionChains
 def findMines(arr):
+     totalClicks = 0
      for i in range(rows):
         for j in range(cols):
             if(arr[i][j]>=1 and arr[i][j]<=8):
@@ -158,12 +161,15 @@ def findMines(arr):
                     if(arr[i-1][j-1]==13):
                         num-=1
                 if(len(clicks)==num):
+                    totalClicks+=len(clicks)
                     for k in range(len(clicks)):
                         arr[clicks[k][0]][clicks[k][1]] = 13
                         el = driver.find_element(By.ID,"cell_"+str(clicks[k][1])+"_"+str(clicks[k][0]))
                         actionChains = ActionChains(driver)
                         actionChains.context_click(el).perform()
                         # el.click()
+    #  if(totalClicks==0):
+    #      return False
      for i in range(rows):
         for j in range(cols):
             if(arr[i][j]>=1 and arr[i][j]<=8):
@@ -195,14 +201,17 @@ def findMines(arr):
                 if(flag_count == arr[i][j]):
                     el = driver.find_element(By.ID,"cell_"+str(j)+"_"+str(i))
                     el.click()
+     return True
 updateCells(grid)
 printGrid(grid)
 while True:
-    findMines(grid)
     updateCells(grid)
-    # printGrid(grid)
+    if not findMines(grid):
+        break
+    printGrid(grid)
 
-
+print("Finished!!")
+time.sleep(100000)
 # In[ ]:
 
 
