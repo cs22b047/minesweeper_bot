@@ -1,9 +1,11 @@
 from selenium import webdriver
 import time
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver import ActionChains
+
 
 driver = webdriver.Chrome()
 driver.maximize_window()
@@ -16,7 +18,11 @@ rows = 16
 grid = [[0]*cols for _ in range(rows)]
 
 delay = 100 # seconds
-el =WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.ID, 'level_select_13')))
+try: 
+    el =WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.ID, 'level_select_13')))
+except TimeoutException:
+    print("page took too long to load...")
+    quit()
 el.click()
 time.sleep(2) 
 el = driver.find_element(By.CLASS_NAME,"start")
@@ -60,12 +66,13 @@ def updateArray(arr):
             elif 'hd_type12' in class_list:
                 arr[i][j] = 12
 def printGrid(arr):
-    print("--------------------------------------------------------------")
+    line_length = cols * 4 + 1 
+    print("-"*line_length)
     for i in range(rows):
         for j in range(cols):
-            print(arr[i][j],end=" ")
+            print("{:3}".format(arr[i][j]), end=" ") 
         print("\n")
-    print("--------------------------------------------------------------")
+    print("-"*line_length)
 
 def findMines(arr):
     #  checks if number of empty cells around a cell equals to number of flags to be placed. If true places those flags
@@ -155,10 +162,13 @@ def findMines(arr):
                     el.click()
 updateArray(grid)
 printGrid(grid)
+i=0
 while True:
+    print("move: ",i)
+    i+=1
     updateArray(grid)
     findMines(grid)
-    # printGrid(grid)
+    printGrid(grid)
 
 
 
