@@ -26,10 +26,25 @@ except TimeoutException:
 el.click()
 time.sleep(2) 
 el = driver.find_element(By.CLASS_NAME,"start")
+start_id = el.get_attribute("id")
+start_row = ""
+start_col = ""
+flag_ = 0 
+for x in start_id:
+    if(x == '_'):
+       flag_ +=1
+       continue
+    if(flag_== 1):
+        start_col += x
+    if(flag_==2):
+        start_row +=x
+    
+start_col = int(start_col)
+start_row = int(start_row)
 el.click()
 
 
-def updateArray(arr):
+def updateGrid(arr):
     for i in range(rows):
         for j in range(cols):
             x_index = str(j)
@@ -65,19 +80,78 @@ def updateArray(arr):
                 arr[i][j] = 13
             elif 'hd_type12' in class_list:
                 arr[i][j] = 12
+                
+
 def printGrid(arr):
-    line_length = cols * 4 + 1 
+    line_length = cols * 3 + 1 
     print("-"*line_length)
     for i in range(rows):
         for j in range(cols):
-            print("{:3}".format(arr[i][j]), end=" ") 
+            print("{:2}".format(arr[i][j]), end=" ") 
         print("\n")
     print("-"*line_length)
+    
 
-def findMines(arr):
+def dfs(arr,i,j,visited,border):
+    flag = False
+    if(i+1<rows):
+        if(arr[i+1][j]==0):
+            flag = True
+    if(i-1<rows):
+        if(arr[i-1][j]==0):
+            flag = True
+    if(j+1<cols):
+        if(arr[i][j+1]==0):
+            flag = True
+    if(j-1<cols):
+        if(arr[i][j-1]==0):
+            flag = True
+    if(i+1<rows and j+1<cols):
+        if(arr[i+1][j+1]==0):
+            flag = True
+    if(i+1<rows and j-1<cols):
+        if(arr[i+1][j-1]==0):
+            flag = True
+    if(i-1<rows and j+1<cols):
+        if(arr[i-1][j+1]==0):
+            flag = True                 
+    if(i-1<rows and j-1<cols):
+        if(arr[i-1][j-1]==0):
+            flag = True
+    if(flag):
+        border.append([i,j])
+    visited[i][j] = True
+    if(i+1<rows):
+        if(visited[i+1][j]==False and arr[i+1][j]!=0):
+            dfs(arr,i+1,j,visited,border)
+    if(i-1<rows):
+        if(visited[i-1][j]==False and arr[i-1][j]!=0):
+            dfs(arr,i-1,j,visited,border)
+    if(j+1<cols):
+        if(visited[i][j+1]==False and arr[i][j+1]!=0):
+            dfs(arr,i,j+1,visited,border)
+    if(j-1<cols):
+        if(visited[i][j-1]==False and arr[i][j-1]!=0):
+            dfs(arr,i,j-1,visited,border)
+    if(i+1<rows and j+1<cols):
+        if(visited[i+1][j+1]==False and arr[i+1][j+1]!=0):
+            dfs(arr,i+1,j+1,visited,border)
+    if(i+1<rows and j-1<cols):
+        if(visited[i+1][j-1]==False and arr[i+1][j-1]!=0):
+            dfs(arr,i+1,j-1,visited,border)                        
+    if(i-1<rows and j+1<cols):
+        if(visited[i-1][j+1]==False and arr[i-1][j+1]!=0):
+            dfs(arr,i-1,j+1,visited,border)                       
+    if(i-1<rows and j-1<cols):
+        if(visited[i-1][j-1]==False and arr[i-1][j-1]!=0):
+            dfs(arr,i-1,j-1,visited,border)
+
+def findMines(arr,seed):
     #  checks if number of empty cells around a cell equals to number of flags to be placed. If true places those flags
-     for i in range(rows):
-        for j in range(cols):
+     border = []
+     visited = [[False]*cols for _ in range(rows)]
+     dfs(arr,seed[0],seed[1],visited,border)
+     for [i,j] in border:
             if(arr[i][j]>=1 and arr[i][j]<=8):
                 num = arr[i][j]
                 clicks = []
@@ -129,8 +203,7 @@ def findMines(arr):
                         actionChains.context_click(el).perform()
                         # el.click()
     # checks if flags around a cell equals to cell value. If true clicks the cell to reveal surrounding cells.
-     for i in range(rows):
-        for j in range(cols):
+     for [i,j] in border:
             if(arr[i][j]>=1 and arr[i][j]<=8):
                 flag_count = 0
                 if(i+1<rows):
@@ -160,17 +233,12 @@ def findMines(arr):
                 if(flag_count == arr[i][j]):
                     el = driver.find_element(By.ID,"cell_"+str(j)+"_"+str(i))
                     el.click()
-updateArray(grid)
+updateGrid(grid)
 printGrid(grid)
 i=0
 while True:
+    updateGrid(grid)
     print("move: ",i)
     i+=1
-    updateArray(grid)
-    findMines(grid)
+    findMines(grid,[start_row,start_col])
     printGrid(grid)
-
-
-
-
-
