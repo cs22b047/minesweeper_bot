@@ -37,8 +37,7 @@ for x in start_id:
     if(flag_== 1):
         start_col += x
     if(flag_==2):
-        start_row +=x
-    
+        start_row +=x 
 start_col = int(start_col)
 start_row = int(start_row)
 el.click()
@@ -50,10 +49,15 @@ def updateGrid(arr):
             x_index = str(j)
             y_index = str(i)
             # print("cell_"+x_index+"_"+y_index)
-            el = driver.find_element(By.ID,"cell_"+x_index+"_"+y_index)
+            try:
+                el = driver.find_element(By.ID,"cell_"+x_index+"_"+y_index)
             # print(el.get_attribute('class').split())
-            class_list = el.get_attribute('class').split()
+                class_list = el.get_attribute('class').split()
             # print(class_list)
+            except:
+                return
+            if 'start' in class_list:
+                el.click()
             if 'hd_type1' in class_list:
                 arr[i][j] = 1
             elif 'hd_type2' in class_list:
@@ -97,61 +101,61 @@ def dfs(arr,i,j,visited,border):
     if(i+1<rows):
         if(arr[i+1][j]==0):
             flag = True
-    if(i-1<rows):
+    if(i-1>=0):
         if(arr[i-1][j]==0):
             flag = True
     if(j+1<cols):
         if(arr[i][j+1]==0):
             flag = True
-    if(j-1<cols):
+    if(j-1>=0):
         if(arr[i][j-1]==0):
             flag = True
     if(i+1<rows and j+1<cols):
         if(arr[i+1][j+1]==0):
             flag = True
-    if(i+1<rows and j-1<cols):
+    if(i+1<rows and j-1>=0):
         if(arr[i+1][j-1]==0):
             flag = True
-    if(i-1<rows and j+1<cols):
+    if(i-1>=0 and j+1<cols):
         if(arr[i-1][j+1]==0):
             flag = True                 
-    if(i-1<rows and j-1<cols):
+    if(i-1>=0 and j-1>=0):
         if(arr[i-1][j-1]==0):
             flag = True
     if(flag):
         border.append([i,j])
     visited[i][j] = True
     if(i+1<rows):
-        if(visited[i+1][j]==False and arr[i+1][j]!=0):
+        if(visited[i+1][j]==False and arr[i+1][j]>0 and arr[i+1][j]<=8):
             dfs(arr,i+1,j,visited,border)
-    if(i-1<rows):
-        if(visited[i-1][j]==False and arr[i-1][j]!=0):
+    if(i-1>=0):
+        if(visited[i-1][j]==False and arr[i-1][j]>0 and arr[i-1][j]<=8):
             dfs(arr,i-1,j,visited,border)
     if(j+1<cols):
-        if(visited[i][j+1]==False and arr[i][j+1]!=0):
+        if(visited[i][j+1]==False and arr[i][j+1]>0 and arr[i][j+1]<=8):
             dfs(arr,i,j+1,visited,border)
-    if(j-1<cols):
-        if(visited[i][j-1]==False and arr[i][j-1]!=0):
+    if(j-1>=0):
+        if(visited[i][j-1]==False and arr[i][j-1]>0 and arr[i][j-1]<=8):
             dfs(arr,i,j-1,visited,border)
     if(i+1<rows and j+1<cols):
-        if(visited[i+1][j+1]==False and arr[i+1][j+1]!=0):
+        if(visited[i+1][j+1]==False and arr[i+1][j+1]>0 and arr[i+1][j+1]<=8):
             dfs(arr,i+1,j+1,visited,border)
-    if(i+1<rows and j-1<cols):
-        if(visited[i+1][j-1]==False and arr[i+1][j-1]!=0):
+    if(i+1<rows and j-1>=0):
+        if(visited[i+1][j-1]==False and arr[i+1][j-1]>0 and arr[i+1][j-1]<=8):
             dfs(arr,i+1,j-1,visited,border)                        
-    if(i-1<rows and j+1<cols):
-        if(visited[i-1][j+1]==False and arr[i-1][j+1]!=0):
+    if(i-1>=0 and j+1<cols):
+        if(visited[i-1][j+1]==False and arr[i-1][j+1]>0 and arr[i-1][j+1]<=8):
             dfs(arr,i-1,j+1,visited,border)                       
-    if(i-1<rows and j-1<cols):
-        if(visited[i-1][j-1]==False and arr[i-1][j-1]!=0):
+    if(i-1>=0 and j-1>=0):
+        if(visited[i-1][j-1]==False and arr[i-1][j-1]>0 and arr[i-1][j-1]<=8):
             dfs(arr,i-1,j-1,visited,border)
 
 def findMines(arr,seed):
     #  checks if number of empty cells around a cell equals to number of flags to be placed. If true places those flags
-     border = []
-     visited = [[False]*cols for _ in range(rows)]
-     dfs(arr,seed[0],seed[1],visited,border)
-     for [i,j] in border:
+    border = []
+    visited = [[False]*cols for _ in range(rows)]
+    dfs(arr,seed[0],seed[1],visited,border)
+    for [i,j] in border:
             if(arr[i][j]>=1 and arr[i][j]<=8):
                 num = arr[i][j]
                 clicks = []
@@ -160,7 +164,7 @@ def findMines(arr,seed):
                         clicks.append([i+1,j])
                     if(arr[i+1][j]==13):
                         num-=1
-                if(i-1<rows):
+                if(i-1>=0):
                     if(arr[i-1][j]==0):
                         clicks.append([i-1,j])
                     if(arr[i-1][j]==13):
@@ -170,7 +174,7 @@ def findMines(arr,seed):
                         clicks.append([i,j+1])
                     if(arr[i][j+1]==13):
                         num-=1
-                if(j-1<cols):
+                if(j-1>=0):
                     if(arr[i][j-1]==0):
                         clicks.append([i,j-1])
                     if(arr[i][j-1]==13):
@@ -180,17 +184,17 @@ def findMines(arr,seed):
                         clicks.append([i+1,j+1])
                     if(arr[i+1][j+1]==13):
                         num-=1
-                if(i+1<rows and j-1<cols):
+                if(i+1<rows and j-1>=0):
                     if(arr[i+1][j-1]==0):
                         clicks.append([i+1,j-1])
                     if(arr[i+1][j-1]==13):
                         num-=1
-                if(i-1<rows and j+1<cols):
+                if(i-1>=0 and j+1<cols):
                     if(arr[i-1][j+1]==0):
                         clicks.append([i-1,j+1])
                     if(arr[i-1][j+1]==13):
                         num-=1
-                if(i-1<rows and j-1<cols):
+                if(i-1>=0 and j-1>=0):
                     if(arr[i-1][j-1]==0):
                         clicks.append([i-1,j-1])
                     if(arr[i-1][j-1]==13):
@@ -198,41 +202,201 @@ def findMines(arr,seed):
                 if(len(clicks)==num):
                     for k in range(len(clicks)):
                         arr[clicks[k][0]][clicks[k][1]] = 13
-                        el = driver.find_element(By.ID,"cell_"+str(clicks[k][1])+"_"+str(clicks[k][0]))
-                        actionChains = ActionChains(driver)
-                        actionChains.context_click(el).perform()
+                        try:
+                            el = driver.find_element(By.ID,"cell_"+str(clicks[k][1])+"_"+str(clicks[k][0]))
+                            actionChains = ActionChains(driver)
+                            actionChains.context_click(el).perform()
+                        except :
+                            return
                         # el.click()
     # checks if flags around a cell equals to cell value. If true clicks the cell to reveal surrounding cells.
-     for [i,j] in border:
-            if(arr[i][j]>=1 and arr[i][j]<=8):
-                flag_count = 0
-                if(i+1<rows):
-                    if(arr[i+1][j]==13):
-                        flag_count+=1
-                if(i-1<rows):
-                    if(arr[i-1][j]==13):
-                        flag_count+=1
-                if(j+1<cols):
-                    if(arr[i][j+1]==13):
-                        flag_count+=1
-                if(j-1<cols):
-                    if(arr[i][j-1]==13):
-                        flag_count+=1
-                if(i+1<rows and j+1<cols):
-                    if(arr[i+1][j+1]==13):
-                        flag_count+=1
-                if(i+1<rows and j-1<cols):
-                    if(arr[i+1][j-1]==13):
-                        flag_count+=1
-                if(i-1<rows and j+1<cols):
-                    if(arr[i-1][j+1]==13):
-                        flag_count+=1
-                if(i-1<rows and j-1<cols):
-                    if(arr[i-1][j-1]==13):
-                        flag_count+=1
-                if(flag_count == arr[i][j]):
-                    el = driver.find_element(By.ID,"cell_"+str(j)+"_"+str(i))
-                    el.click()
+    right_clicks = []
+    left_clicks = []
+    for [i1,j1] in border:
+        for [i2,j2] in border:
+                if i1-i2==1 or i1-i2==-1 or j1-j2==1 or j1-j2==-1:
+                    s1 = set()
+                    s2 = set()
+                    v1 = arr[i1][j1]
+                    v2 = arr[i2][j2]
+                    if(i1+1<rows):
+                        if(arr[i1+1][j1]==0):
+                            s1.add((i1+1,j1))
+                        if(arr[i1+1][j1]==13):
+                            v1-=1
+                    if(i1-1>=0):
+                        if(arr[i1-1][j1]==0):
+                            s1.add((i1-1,j1))
+                        if(arr[i1-1][j1]==13):
+                            v1-=1
+                    if(j1+1<cols):
+                        if(arr[i1][j1+1]==0):
+                            s1.add((i1,j1+1))
+                        if(arr[i1][j1+1]==13):
+                            v1-=1
+                    if(j1-1>=0):
+                        if(arr[i1][j1-1]==0):
+                            s1.add((i1,j1-1))
+                        if(arr[i1][j1-1]==13):
+                            v1-=1
+                    if(i1+1<rows and j1+1<cols):
+                        if(arr[i1+1][j1+1]==0):
+                            s1.add((i1+1,j1+1))
+                        if(arr[i1+1][j1+1]==13):
+                            v1-=1
+                    if(i1+1<rows and j1-1>=0):
+                        if(arr[i1+1][j1-1]==0):
+                            s1.add((i1+1,j1-1))
+                        if(arr[i1+1][j1-1]==13):
+                            v1-=1
+                    if(i1-1>=0 and j1+1<cols):
+                        if(arr[i1-1][j1+1]==0):
+                            s1.add((i1-1,j1+1))
+                        if(arr[i1-1][j1+1]==13):
+                            v1-=1
+                    if(i1-1>=0 and j1-1>=0):
+                        if(arr[i1-1][j1-1]==0):
+                            s1.add((i1-1,j1-1))
+                        if(arr[i1-1][j1-1]==13):
+                            v1-=1
+
+
+                    if(i2+1<rows):
+                        if(arr[i2+1][j2]==0):
+                            s2.add((i2+1,j2))
+                        if(arr[i2+1][j2]==13):
+                            v2-=1
+                    if(i2-1>=0):
+                        if(arr[i2-1][j2]==0):
+                            s2.add((i2-1,j2))
+                        if(arr[i2-1][j2]==13):
+                            v2-=1
+                    if(j2+1<cols):
+                        if(arr[i2][j2+1]==0):
+                            s2.add((i2,j2+1))
+                        if(arr[i2][j2+1]==13):
+                            v2-=1
+                    if(j2-1>=0):
+                        if(arr[i2][j2-1]==0):
+                            s2.add((i2,j2-1))
+                        if(arr[i2][j2-1]==13):
+                            v2-=1
+                    if(i2+1<rows and j2+1<cols):
+                        if(arr[i2+1][j2+1]==0):
+                            s2.add((i2+1,j2+1))
+                        if(arr[i2+1][j2+1]==13):
+                            v2-=1
+                    if(i2+1<rows and j2-1>=0):
+                        if(arr[i2+1][j2-1]==0):
+                            s2.add((i2+1,j2-1))
+                        if(arr[i2+1][j2-1]==13):
+                            v2-=1
+                    if(i2-1>=0 and j2+1<cols):
+                        if(arr[i2-1][j2+1]==0):
+                            s2.add((i2-1,j2+1))
+                        if(arr[i2-1][j2+1]==13):
+                            v2-=1
+                    if(i2-1>=0 and j2-1>=0):
+                        if(arr[i2-1][j2-1]==0):
+                            s2.add((i2-1,j2-1))
+                        if(arr[i2-1][j2-1]==13):
+                            v2-=1
+                    if(len(s1&s2)!=0):
+                     if(v1-v2 == len(s1.difference(s2))):
+                        for tile in s1.difference(s2):
+                            arr[tile[0]][tile[1]] = 13
+                            right_clicks.append(tile)
+                        for tile in s2.difference(s1):
+                            left_clicks.append(tile)
+    for tile in right_clicks:
+        el = driver.find_element(By.ID,"cell_"+str(tile[1])+"_"+str(tile[0]))
+        actionChains = ActionChains(driver)
+        actionChains.context_click(el).perform()
+    for tile in left_clicks:
+        el = driver.find_element(By.ID,"cell_"+str(tile[1])+"_"+str(tile[0]))
+        el.click()
+    for [i,j] in border:
+        el = driver.find_element(By.ID,"cell_"+str(j)+"_"+str(i))
+        el.click()
+                
+# def getBorder(arr,i,j,visited,border):
+#     print([i,j])
+#     if(i+1<rows):
+#         if(arr[i+1][j]==0):
+#             if(not visited[i+1][j]):
+#                 visited[i+1][j] = True
+#                 border.append([i+1,j])
+#     if(i-1>=0):
+#         if(arr[i-1][j]==0):
+#             if(not visited[i-1][j]):
+#                 visited[i-1][j] = True
+#                 border.append([i-1,j])
+#     if(j+1<cols):
+#         if(arr[i][j+1]==0):
+#             if(not visited[i][j+1]):
+#                 visited[i][j+1] = True
+#                 border.append([i,j+1])
+#     if(j-1>=0):
+#         if(arr[i][j-1]==0):
+#             if(not visited[i][j-1]):
+#                 visited[i][j-1] = True
+#                 border.append([i,j-1])
+#     if(i+1<rows and j+1<cols):
+#         if(arr[i+1][j+1]==0):
+#             if(not visited[i+1][j+1]):
+#                 visited[i+1][j+1] = True
+#                 border.append([i+1,j+1])
+#     if(i+1<rows and j-1>=0):
+#         if(arr[i+1][j-1]==0):
+#             if(not visited[i+1][j-1]):
+#                 visited[i+1][j-1] = True
+#                 border.append([i+1,j-1])
+#     if(i-1>=0 and j+1<cols):
+#         if(arr[i-1][j+1]==0):
+#             if(not visited[i-1][j+1]):
+#                 visited[i-1][j+1] = True
+#                 border.append([i-1,j+1])
+#     if(i-1>=0 and j-1>=0):
+#         if(arr[i-1][j-1]==0):
+#             if(not visited[i-1][j-1]):
+#                 visited[i-1][j-1] = True
+#                 border.append([i-1,j-1])
+#     visited[i][j] = True
+#     if(i+1<rows):
+#         if(visited[i+1][j]==False and arr[i+1][j]!=0):
+#             dfs(arr,i+1,j,visited,border)
+#     if(i-1>=0):
+#         if(visited[i-1][j]==False and arr[i-1][j]!=0):
+#             dfs(arr,i-1,j,visited,border)
+#     if(j+1<cols):
+#         if(visited[i][j+1]==False and arr[i][j+1]!=0):
+#             dfs(arr,i,j+1,visited,border)
+#     if(j-1>=0):
+#         if(visited[i][j-1]==False and arr[i][j-1]!=0):
+#             dfs(arr,i,j-1,visited,border)
+#     if(i+1<rows and j+1<cols):
+#         if(visited[i+1][j+1]==False and arr[i+1][j+1]!=0):
+#             dfs(arr,i+1,j+1,visited,border)
+#     if(i+1<rows and j-1>=0):
+#         if(visited[i+1][j-1]==False and arr[i+1][j-1]!=0):
+#             dfs(arr,i+1,j-1,visited,border)                        
+#     if(i-1>=0 and j+1<cols):
+#         if(visited[i-1][j+1]==False and arr[i-1][j+1]!=0):
+#             dfs(arr,i-1,j+1,visited,border)                       
+#     if(i-1>=0 and j-1>=0):
+#         if(visited[i-1][j-1]==False and arr[i-1][j-1]!=0):
+#             dfs(arr,i-1,j-1,visited,border)
+
+# def findMines_2(arr,seed):
+#     border = []
+#     visited = [[False]*cols for _ in range(rows)]
+#     getBorder(arr,seed[0],seed[1],visited,border)
+#     for [i,j] in border:
+#         print(i)
+#         el = driver.find_element(By.ID,"cell_"+str(j)+"_"+str(i))
+#         actionChains = ActionChains(driver)
+#         actionChains.context_click(el).perform()
+        
 updateGrid(grid)
 printGrid(grid)
 i=0
