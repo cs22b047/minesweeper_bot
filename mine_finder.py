@@ -24,7 +24,7 @@ except TimeoutException:
     print("page took too long to load...")
     quit()
 el.click()
-time.sleep(2) 
+time.sleep(2)
 el = driver.find_element(By.CLASS_NAME,"start")
 start_id = el.get_attribute("id")
 start_row = ""
@@ -151,7 +151,6 @@ def dfs(arr,i,j,visited,border):
             dfs(arr,i-1,j-1,visited,border)
 
 def findMines(arr,seed):
-    #  checks if number of empty cells around a cell equals to number of flags to be placed. If true places those flags
     border = []
     visited = [[False]*cols for _ in range(rows)]
     dfs(arr,seed[0],seed[1],visited,border)
@@ -208,8 +207,6 @@ def findMines(arr,seed):
                             actionChains.context_click(el).perform()
                         except :
                             return
-                        # el.click()
-    # checks if flags around a cell equals to cell value. If true clicks the cell to reveal surrounding cells.
     right_clicks = []
     left_clicks = []
     for [i1,j1] in border:
@@ -318,85 +315,8 @@ def findMines(arr,seed):
     for [i,j] in border:
         el = driver.find_element(By.ID,"cell_"+str(j)+"_"+str(i))
         el.click()
-                
-# def getBorder(arr,i,j,visited,border):
-#     print([i,j])
-#     if(i+1<rows):
-#         if(arr[i+1][j]==0):
-#             if(not visited[i+1][j]):
-#                 visited[i+1][j] = True
-#                 border.append([i+1,j])
-#     if(i-1>=0):
-#         if(arr[i-1][j]==0):
-#             if(not visited[i-1][j]):
-#                 visited[i-1][j] = True
-#                 border.append([i-1,j])
-#     if(j+1<cols):
-#         if(arr[i][j+1]==0):
-#             if(not visited[i][j+1]):
-#                 visited[i][j+1] = True
-#                 border.append([i,j+1])
-#     if(j-1>=0):
-#         if(arr[i][j-1]==0):
-#             if(not visited[i][j-1]):
-#                 visited[i][j-1] = True
-#                 border.append([i,j-1])
-#     if(i+1<rows and j+1<cols):
-#         if(arr[i+1][j+1]==0):
-#             if(not visited[i+1][j+1]):
-#                 visited[i+1][j+1] = True
-#                 border.append([i+1,j+1])
-#     if(i+1<rows and j-1>=0):
-#         if(arr[i+1][j-1]==0):
-#             if(not visited[i+1][j-1]):
-#                 visited[i+1][j-1] = True
-#                 border.append([i+1,j-1])
-#     if(i-1>=0 and j+1<cols):
-#         if(arr[i-1][j+1]==0):
-#             if(not visited[i-1][j+1]):
-#                 visited[i-1][j+1] = True
-#                 border.append([i-1,j+1])
-#     if(i-1>=0 and j-1>=0):
-#         if(arr[i-1][j-1]==0):
-#             if(not visited[i-1][j-1]):
-#                 visited[i-1][j-1] = True
-#                 border.append([i-1,j-1])
-#     visited[i][j] = True
-#     if(i+1<rows):
-#         if(visited[i+1][j]==False and arr[i+1][j]!=0):
-#             dfs(arr,i+1,j,visited,border)
-#     if(i-1>=0):
-#         if(visited[i-1][j]==False and arr[i-1][j]!=0):
-#             dfs(arr,i-1,j,visited,border)
-#     if(j+1<cols):
-#         if(visited[i][j+1]==False and arr[i][j+1]!=0):
-#             dfs(arr,i,j+1,visited,border)
-#     if(j-1>=0):
-#         if(visited[i][j-1]==False and arr[i][j-1]!=0):
-#             dfs(arr,i,j-1,visited,border)
-#     if(i+1<rows and j+1<cols):
-#         if(visited[i+1][j+1]==False and arr[i+1][j+1]!=0):
-#             dfs(arr,i+1,j+1,visited,border)
-#     if(i+1<rows and j-1>=0):
-#         if(visited[i+1][j-1]==False and arr[i+1][j-1]!=0):
-#             dfs(arr,i+1,j-1,visited,border)                        
-#     if(i-1>=0 and j+1<cols):
-#         if(visited[i-1][j+1]==False and arr[i-1][j+1]!=0):
-#             dfs(arr,i-1,j+1,visited,border)                       
-#     if(i-1>=0 and j-1>=0):
-#         if(visited[i-1][j-1]==False and arr[i-1][j-1]!=0):
-#             dfs(arr,i-1,j-1,visited,border)
-
-# def findMines_2(arr,seed):
-#     border = []
-#     visited = [[False]*cols for _ in range(rows)]
-#     getBorder(arr,seed[0],seed[1],visited,border)
-#     for [i,j] in border:
-#         print(i)
-#         el = driver.find_element(By.ID,"cell_"+str(j)+"_"+str(i))
-#         actionChains = ActionChains(driver)
-#         actionChains.context_click(el).perform()
         
+      
 updateGrid(grid)
 printGrid(grid)
 i=0
