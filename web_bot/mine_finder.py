@@ -126,29 +126,30 @@ def dfs(arr,i,j,visited,border):
         border.append([i,j])
     visited[i][j] = True
     if(i+1<rows):
-        if(visited[i+1][j]==False and arr[i+1][j]>0 and arr[i+1][j]<=8):
+        if(visited[i+1][j]==False and arr[i+1][j]>=-1 and arr[i+1][j]<=8 and arr[i+1][j]!=0):
             dfs(arr,i+1,j,visited,border)
     if(i-1>=0):
-        if(visited[i-1][j]==False and arr[i-1][j]>0 and arr[i-1][j]<=8):
+        if(visited[i-1][j]==False and arr[i-1][j]>=-1 and arr[i-1][j]<=8 and arr[i-1][j]!=0):
             dfs(arr,i-1,j,visited,border)
     if(j+1<cols):
-        if(visited[i][j+1]==False and arr[i][j+1]>0 and arr[i][j+1]<=8):
+        if(visited[i][j+1]==False and arr[i][j+1]>=-1 and arr[i][j+1]<=8 and arr[i][j+1]!=0):
             dfs(arr,i,j+1,visited,border)
     if(j-1>=0):
-        if(visited[i][j-1]==False and arr[i][j-1]>0 and arr[i][j-1]<=8):
+        if(visited[i][j-1]==False and arr[i][j-1]>=-1 and arr[i][j-1]<=8 and arr[i][j-1]!=0):
             dfs(arr,i,j-1,visited,border)
     if(i+1<rows and j+1<cols):
-        if(visited[i+1][j+1]==False and arr[i+1][j+1]>0 and arr[i+1][j+1]<=8):
+        if(visited[i+1][j+1]==False and arr[i+1][j+1]>=-1 and arr[i+1][j+1]<=8 and arr[i+1][j+1]!=0):
             dfs(arr,i+1,j+1,visited,border)
     if(i+1<rows and j-1>=0):
-        if(visited[i+1][j-1]==False and arr[i+1][j-1]>0 and arr[i+1][j-1]<=8):
+        if(visited[i+1][j-1]==False and arr[i+1][j-1]>=-1 and arr[i+1][j-1]<=8 and arr[i+1][j-1]!=0):
             dfs(arr,i+1,j-1,visited,border)                        
     if(i-1>=0 and j+1<cols):
-        if(visited[i-1][j+1]==False and arr[i-1][j+1]>0 and arr[i-1][j+1]<=8):
+        if(visited[i-1][j+1]==False and arr[i-1][j+1]>=-1 and arr[i-1][j+1]<=8 and arr[i-1][j+1]!=0):
             dfs(arr,i-1,j+1,visited,border)                       
     if(i-1>=0 and j-1>=0):
-        if(visited[i-1][j-1]==False and arr[i-1][j-1]>0 and arr[i-1][j-1]<=8):
+        if(visited[i-1][j-1]==False and arr[i-1][j-1]>=-1 and arr[i-1][j-1]<=8 and arr[i-1][j-1]!=0):
             dfs(arr,i-1,j-1,visited,border)
+
 
 def findMines(arr,seed):
     border = []
