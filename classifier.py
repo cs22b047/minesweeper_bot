@@ -30,7 +30,7 @@ class ImgRecognizer:
             self.target_values.append(target_value)
 
     def load(self):
-        self._load('Training_data2/closed', 0)
+        self._load('Training_data2/closed', -1)
         self._load('Training_data2/one', 1)
         self._load('Training_data2/two', 2)
         self._load('Training_data2/three', 3)
@@ -39,7 +39,7 @@ class ImgRecognizer:
         self._load('Training_data2/six', 6)
         self._load('Training_data2/seven', 7)
         self._load('Training_data2/eight', 8)
-        self._load('Training_data2/zero', -1)
+        self._load('Training_data2/zero', 0)
         self._load('Training_data2/flag', 13)
         self._load('Training_data2/opened_mine', 9)
         

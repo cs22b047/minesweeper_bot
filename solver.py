@@ -11,55 +11,55 @@ class Solver:
  def dfs(self,arr,i,j,visited,border):
     flag = False
     if(i+1<self.rows):
-        if(arr[i+1][j]==0):
+        if(arr[i+1][j]==-1):
             flag = True
     if(i-1>=0):
-        if(arr[i-1][j]==0):
+        if(arr[i-1][j]==-1):
             flag = True
     if(j+1<self.cols):
-        if(arr[i][j+1]==0):
+        if(arr[i][j+1]==-1):
             flag = True
     if(j-1>=0):
-        if(arr[i][j-1]==0):
+        if(arr[i][j-1]==-1):
             flag = True
     if(i+1<self.rows and j+1<self.cols):
-        if(arr[i+1][j+1]==0):
+        if(arr[i+1][j+1]==-1):
             flag = True
     if(i+1<self.rows and j-1>=0):
-        if(arr[i+1][j-1]==0):
+        if(arr[i+1][j-1]==-1):
             flag = True
     if(i-1>=0 and j+1<self.cols):
-        if(arr[i-1][j+1]==0):
+        if(arr[i-1][j+1]==-1):
             flag = True                 
     if(i-1>=0 and j-1>=0):
-        if(arr[i-1][j-1]==0):
+        if(arr[i-1][j-1]==-1):
             flag = True
     if(flag):
         border.append([i,j])
     visited[i][j] = True
     if(i+1<self.rows):
-        if(visited[i+1][j]==False and arr[i+1][j]>=-1 and arr[i+1][j]<=8 and arr[i+1][j]!=0):
+        if(visited[i+1][j]==False and arr[i+1][j]>=0 and arr[i+1][j]<=8):
             self.dfs(arr,i+1,j,visited,border)
     if(i-1>=0):
-        if(visited[i-1][j]==False and arr[i-1][j]>=-1 and arr[i-1][j]<=8 and arr[i-1][j]!=0):
+        if(visited[i-1][j]==False and arr[i-1][j]>=0 and arr[i-1][j]<=8):
             self.dfs(arr,i-1,j,visited,border)
     if(j+1<self.cols):
-        if(visited[i][j+1]==False and arr[i][j+1]>=-1 and arr[i][j+1]<=8 and arr[i][j+1]!=0):
+        if(visited[i][j+1]==False and arr[i][j+1]>=0 and arr[i][j+1]<=8):
             self.dfs(arr,i,j+1,visited,border)
     if(j-1>=0):
-        if(visited[i][j-1]==False and arr[i][j-1]>=-1 and arr[i][j-1]<=8 and arr[i][j-1]!=0):
+        if(visited[i][j-1]==False and arr[i][j-1]>=0 and arr[i][j-1]<=8):
             self.dfs(arr,i,j-1,visited,border)
     if(i+1<self.rows and j+1<self.cols):
-        if(visited[i+1][j+1]==False and arr[i+1][j+1]>=-1 and arr[i+1][j+1]<=8 and arr[i+1][j+1]!=0):
+        if(visited[i+1][j+1]==False and arr[i+1][j+1]>=0 and arr[i+1][j+1]<=8):
             self.dfs(arr,i+1,j+1,visited,border)
     if(i+1<self.rows and j-1>=0):
-        if(visited[i+1][j-1]==False and arr[i+1][j-1]>=-1 and arr[i+1][j-1]<=8 and arr[i+1][j-1]!=0):
+        if(visited[i+1][j-1]==False and arr[i+1][j-1]>=0 and arr[i+1][j-1]<=8):
             self.dfs(arr,i+1,j-1,visited,border)                        
     if(i-1>=0 and j+1<self.cols):
-        if(visited[i-1][j+1]==False and arr[i-1][j+1]>=-1 and arr[i-1][j+1]<=8 and arr[i-1][j+1]!=0):
+        if(visited[i-1][j+1]==False and arr[i-1][j+1]>=0 and arr[i-1][j+1]<=8):
             self.dfs(arr,i-1,j+1,visited,border)                       
     if(i-1>=0 and j-1>=0):
-        if(visited[i-1][j-1]==False and arr[i-1][j-1]>=-1 and arr[i-1][j-1]<=8 and arr[i-1][j-1]!=0):
+        if(visited[i-1][j-1]==False and arr[i-1][j-1]>=0 and arr[i-1][j-1]<=8):
             self.dfs(arr,i-1,j-1,visited,border)
 
  def findMines(self,arr,seed):
@@ -73,42 +73,42 @@ class Solver:
                 num = arr[i][j]
                 clicks = []
                 if(i+1<self.rows):
-                    if(arr[i+1][j]==0):
+                    if(arr[i+1][j]==-1):
                         clicks.append([i+1,j])
                     if(arr[i+1][j]==13):
                         num-=1
                 if(i-1>=0):
-                    if(arr[i-1][j]==0):
+                    if(arr[i-1][j]==-1):
                         clicks.append([i-1,j])
                     if(arr[i-1][j]==13):
                         num-=1
                 if(j+1<self.cols):
-                    if(arr[i][j+1]==0):
+                    if(arr[i][j+1]==-1):
                         clicks.append([i,j+1])
                     if(arr[i][j+1]==13):
                         num-=1
                 if(j-1>=0):
-                    if(arr[i][j-1]==0):
+                    if(arr[i][j-1]==-1):
                         clicks.append([i,j-1])
                     if(arr[i][j-1]==13):
                         num-=1
                 if(i+1<self.rows and j+1<self.cols):
-                    if(arr[i+1][j+1]==0):
+                    if(arr[i+1][j+1]==-1):
                         clicks.append([i+1,j+1])
                     if(arr[i+1][j+1]==13):
                         num-=1
                 if(i+1<self.rows and j-1>=0):
-                    if(arr[i+1][j-1]==0):
+                    if(arr[i+1][j-1]==-1):
                         clicks.append([i+1,j-1])
                     if(arr[i+1][j-1]==13):
                         num-=1
                 if(i-1>=0 and j+1<self.cols):
-                    if(arr[i-1][j+1]==0):
+                    if(arr[i-1][j+1]==-1):
                         clicks.append([i-1,j+1])
                     if(arr[i-1][j+1]==13):
                         num-=1
                 if(i-1>=0 and j-1>=0):
-                    if(arr[i-1][j-1]==0):
+                    if(arr[i-1][j-1]==-1):
                         clicks.append([i-1,j-1])
                     if(arr[i-1][j-1]==13):
                         num-=1
@@ -128,84 +128,84 @@ class Solver:
                     v1 = arr[i1][j1]
                     v2 = arr[i2][j2]
                     if(i1+1<self.rows):
-                        if(arr[i1+1][j1]==0):
+                        if(arr[i1+1][j1]==-1):
                             s1.add((i1+1,j1))
                         if(arr[i1+1][j1]==13):
                             v1-=1
                     if(i1-1>=0):
-                        if(arr[i1-1][j1]==0):
+                        if(arr[i1-1][j1]==-1):
                             s1.add((i1-1,j1))
                         if(arr[i1-1][j1]==13):
                             v1-=1
                     if(j1+1<self.cols):
-                        if(arr[i1][j1+1]==0):
+                        if(arr[i1][j1+1]==-1):
                             s1.add((i1,j1+1))
                         if(arr[i1][j1+1]==13):
                             v1-=1
                     if(j1-1>=0):
-                        if(arr[i1][j1-1]==0):
+                        if(arr[i1][j1-1]==-1):
                             s1.add((i1,j1-1))
                         if(arr[i1][j1-1]==13):
                             v1-=1
                     if(i1+1<self.rows and j1+1<self.cols):
-                        if(arr[i1+1][j1+1]==0):
+                        if(arr[i1+1][j1+1]==-1):
                             s1.add((i1+1,j1+1))
                         if(arr[i1+1][j1+1]==13):
                             v1-=1
                     if(i1+1<self.rows and j1-1>=0):
-                        if(arr[i1+1][j1-1]==0):
+                        if(arr[i1+1][j1-1]==-1):
                             s1.add((i1+1,j1-1))
                         if(arr[i1+1][j1-1]==13):
                             v1-=1
                     if(i1-1>=0 and j1+1<self.cols):
-                        if(arr[i1-1][j1+1]==0):
+                        if(arr[i1-1][j1+1]==-1):
                             s1.add((i1-1,j1+1))
                         if(arr[i1-1][j1+1]==13):
                             v1-=1
                     if(i1-1>=0 and j1-1>=0):
-                        if(arr[i1-1][j1-1]==0):
+                        if(arr[i1-1][j1-1]==-1):
                             s1.add((i1-1,j1-1))
                         if(arr[i1-1][j1-1]==13):
                             v1-=1
 
 
                     if(i2+1<self.rows):
-                        if(arr[i2+1][j2]==0):
+                        if(arr[i2+1][j2]==-1):
                             s2.add((i2+1,j2))
                         if(arr[i2+1][j2]==13):
                             v2-=1
                     if(i2-1>=0):
-                        if(arr[i2-1][j2]==0):
+                        if(arr[i2-1][j2]==-1):
                             s2.add((i2-1,j2))
                         if(arr[i2-1][j2]==13):
                             v2-=1
                     if(j2+1<self.cols):
-                        if(arr[i2][j2+1]==0):
+                        if(arr[i2][j2+1]==-1):
                             s2.add((i2,j2+1))
                         if(arr[i2][j2+1]==13):
                             v2-=1
                     if(j2-1>=0):
-                        if(arr[i2][j2-1]==0):
+                        if(arr[i2][j2-1]==-1):
                             s2.add((i2,j2-1))
                         if(arr[i2][j2-1]==13):
                             v2-=1
                     if(i2+1<self.rows and j2+1<self.cols):
-                        if(arr[i2+1][j2+1]==0):
+                        if(arr[i2+1][j2+1]==-1):
                             s2.add((i2+1,j2+1))
                         if(arr[i2+1][j2+1]==13):
                             v2-=1
                     if(i2+1<self.rows and j2-1>=0):
-                        if(arr[i2+1][j2-1]==0):
+                        if(arr[i2+1][j2-1]==-1):
                             s2.add((i2+1,j2-1))
                         if(arr[i2+1][j2-1]==13):
                             v2-=1
                     if(i2-1>=0 and j2+1<self.cols):
-                        if(arr[i2-1][j2+1]==0):
+                        if(arr[i2-1][j2+1]==-1):
                             s2.add((i2-1,j2+1))
                         if(arr[i2-1][j2+1]==13):
                             v2-=1
                     if(i2-1>=0 and j2-1>=0):
-                        if(arr[i2-1][j2-1]==0):
+                        if(arr[i2-1][j2-1]==-1):
                             s2.add((i2-1,j2-1))
                         if(arr[i2-1][j2-1]==13):
                             v2-=1
@@ -230,42 +230,42 @@ class Solver:
                 num = arr[i][j]
                 safe = 0
                 if(i+1<self.rows):
-                    if(arr[i+1][j]==0):
+                    if(arr[i+1][j]==-1):
                         safe+=1
                     if(arr[i+1][j]==13):
                         num-=1
                 if(i-1>=0):
-                    if(arr[i-1][j]==0):
+                    if(arr[i-1][j]==-1):
                         safe+=1
                     if(arr[i-1][j]==13):
                         num-=1
                 if(j+1<self.cols):
-                    if(arr[i][j+1]==0):
+                    if(arr[i][j+1]==-1):
                         safe+=1
                     if(arr[i][j+1]==13):
                         num-=1
                 if(j-1>=0):
-                    if(arr[i][j-1]==0):
+                    if(arr[i][j-1]==-1):
                         safe+=1
                     if(arr[i][j-1]==13):
                         num-=1
                 if(i+1<self.rows and j+1<self.cols):
-                    if(arr[i+1][j+1]==0):
+                    if(arr[i+1][j+1]==-1):
                         safe+=1
                     if(arr[i+1][j+1]==13):
                         num-=1
                 if(i+1<self.rows and j-1>=0):
-                    if(arr[i+1][j-1]==0):
+                    if(arr[i+1][j-1]==-1):
                         safe+=1
                     if(arr[i+1][j-1]==13):
                         num-=1
                 if(i-1>=0 and j+1<self.cols):
-                    if(arr[i-1][j+1]==0):
+                    if(arr[i-1][j+1]==-1):
                         safe+=1
                     if(arr[i-1][j+1]==13):
                         num-=1
                 if(i-1>=0 and j-1>=0):
-                    if(arr[i-1][j-1]==0):
+                    if(arr[i-1][j-1]==-1):
                         safe+=1
                     if(arr[i-1][j-1]==13):
                         num-=1
