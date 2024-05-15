@@ -5,14 +5,6 @@ from PIL import Image
 import os
 import numpy as np
 
-'''
- candy values:
-- 0 blue
-- 1 green
-- 2 orange
-- 3 purple
-- 4 yellow'''
-
 
 class ImgRecognizer:
     def __init__(self):
@@ -30,18 +22,18 @@ class ImgRecognizer:
             self.target_values.append(target_value)
 
     def load(self):
-        self._load('Training_data2/closed', -1)
-        self._load('Training_data2/one', 1)
-        self._load('Training_data2/two', 2)
-        self._load('Training_data2/three', 3)
-        self._load('Training_data2/four', 4)
-        self._load('Training_data2/five', 5)
-        self._load('Training_data2/six', 6)
-        self._load('Training_data2/seven', 7)
-        self._load('Training_data2/eight', 8)
-        self._load('Training_data2/zero', 0)
-        self._load('Training_data2/flag', 13)
-        self._load('Training_data2/opened_mine', 9)
+        self._load('Training_data/closed', -1)
+        self._load('Training_data/one', 1)
+        self._load('Training_data/two', 2)
+        self._load('Training_data/three', 3)
+        self._load('Training_data/four', 4)
+        self._load('Training_data/five', 5)
+        self._load('Training_data/six', 6)
+        self._load('Training_data/seven', 7)
+        self._load('Training_data/eight', 8)
+        self._load('Training_data/zero', 0)
+        self._load('Training_data/flag', 13)
+        self._load('Training_data/opened_mine', 9)
         
     def train(self):
         if os.path.isfile('svc.dat'):
