@@ -62,7 +62,7 @@ class Solver:
                                 for tile in s2-s1:
                                     # arr[tile[0]][tile[1]] = -2
                                     left_clicks.append(tile)
-                        if(len(s1)==v1):
+                        elif(len(s1)==v1):
                             for tile in s1:
                                 arr[tile[0]][tile[1]] = 13
                                 right_clicks.append(tile)
